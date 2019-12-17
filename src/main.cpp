@@ -13,6 +13,7 @@ int main(int argc, char** argv) try
     dlib::command_line_parser cmd_parser;
     cmd_parser.add_option("max-size", "max num of pixels per image", 1);
     cmd_parser.add_option("max-images", "maximum number of images", 1);
+    cmd_parser.add_option("show", "show the resulting image");
     cmd_parser.set_group_name("Help Options");
     cmd_parser.add_option("h", "");
     cmd_parser.add_option("help", "display this message and exit");
@@ -50,8 +51,11 @@ int main(int argc, char** argv) try
 
     dlib::matrix<dlib::rgb_pixel> tiled_image = dlib::tile_images(images);
     dlib::save_jpeg(tiled_image, "tiled_image.jpg");
-    dlib::image_window win(tiled_image, "tiled image");
-    win.wait_until_closed();
+    if (cmd_parser.option("show"))
+    {
+        dlib::image_window win(tiled_image, "tiled image");
+        win.wait_until_closed();
+    }
     return EXIT_SUCCESS;
 }
 catch (std::exception& e)
