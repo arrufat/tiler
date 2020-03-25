@@ -30,6 +30,7 @@ int main(int argc, char** argv) try
     const double max_size = dlib::get_option(cmd_parser, "max-size", std::numeric_limits<double>::max());
     const size_t max_images = dlib::get_option(cmd_parser, "max-images", std::numeric_limits<size_t>::max());
     auto files = dlib::get_files_in_directory_tree(root, dlib::match_endings(".jpg .JPG .jpeg .JPEG .png .PNG"));
+    std::sort(files.begin(), files.end());
     std::cout << "Found " << files.size() << " images\n";
     auto num_images = std::min(max_images, files.size());
     files.erase(files.begin() + num_images, files.end());
